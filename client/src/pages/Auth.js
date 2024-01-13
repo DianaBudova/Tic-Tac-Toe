@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./styles/Auth.css";
 
 const Auth = () => {
-  const [nickname, setNickname] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [isValidating, setIsValidating] = useState(false);
 
@@ -15,13 +15,13 @@ const Auth = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        nickname: nickname,
+        login: login,
         password: password,
       }),
     })
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
-    setNickname("");
+      setLogin("");
     setPassword("");
     setIsValidating(false);
   };
@@ -34,11 +34,11 @@ const Auth = () => {
         <form onSubmit={(e) => handleSubmit(e)}>
           <p>Authentication</p>
           <p>
-            Nickname:
+            Login:
             <input
               type="text"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
+              value={login}
+              onChange={(e) => setLogin(e.target.value)}
             />
           </p>
           <p>
