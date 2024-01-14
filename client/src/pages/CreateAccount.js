@@ -1,18 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./styles/Auth.css";
+import "./styles/CreateAccount.css";
 
-const Auth = () => {
+const CreateAccount = () => {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
-    const [isValidating, setIsValidating] = useState(false);
+    const [isCreating, setIsCreating] = useState(false);
 
     const navigate = useNavigate();
 
-    const handleSubmitSignIn = (e) => {
+    const handleSubmitCreateAccount = (e) => {
         e.preventDefault();
-        setIsValidating(true);
-        fetch("http://localhost:4000/validate-user", {
+        setIsCreating(true);
+        fetch("http://localhost:4000/create-account", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -24,48 +24,48 @@ const Auth = () => {
         }).catch((error) => console.log(error));
         setLogin("");
         setPassword("");
-        setIsValidating(false);
+        setIsCreating(false);
     };
 
-    const handleSubmitCreateAccount = (e) => {
+    const handleSubmitBackToSignIn = (e) => {
         e.preventDefault();
-        navigate("/creating-account");
+        navigate("/auth");
     };
 
     return (
-        <div className="auth-container">
-            {isValidating ? (
-                <div className="auth-container-item">
-                    <p>Validating data...</p>
+        <div className="create-account-container">
+            {isCreating ? (
+                <div className="create-account-container-item">
+                    <p>Creating a new account...</p>
                 </div>
             ) : (
                 <>
-                    <form onSubmit={(e) => handleSubmitSignIn(e)}>
-                        <div className="auth-container-item">
-                            <p>Authentication</p>
+                    <form onSubmit={(e) => handleSubmitCreateAccount(e)}>
+                        <div className="create-account-container-item">
+                            <p>Create Account</p>
                         </div>
-                        <div className="auth-container-item">
-                            <p>Login:</p>
+                        <div className="create-account-container-item">
+                            <p>Your new login:</p>
                             <input
                                 type="text"
                                 value={login}
                                 onChange={(e) => setLogin(e.target.value)}
                             />
                         </div>
-                        <div className="auth-container-item">
-                            <p>Password:</p>
+                        <div className="create-account-container-item">
+                            <p>Your new password:</p>
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
-                        <div className="auth-container-item">
-                            <input type="submit" value="Sign In" />
+                        <div className="create-account-container-item">
+                            <input type="submit" value="Create" />
                         </div>
                     </form>
-                    <form onSubmit={(e) => handleSubmitCreateAccount(e)}>
-                        <input type="submit" value="Create a new account" />
+                    <form onSubmit={(e) => handleSubmitBackToSignIn(e)}>
+                        <input type="submit" value="Back to Sign In" />
                     </form>
                 </>
             )}
@@ -73,4 +73,4 @@ const Auth = () => {
     );
 };
 
-export default Auth;
+export default CreateAccount;
