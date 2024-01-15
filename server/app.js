@@ -1,63 +1,40 @@
-const express = require("express");
-const cors = require("cors");
-const mysql = require("mysql");
-const config = require("./config");
-const insert_user = require("./database/insert_user");
-const validate_user = require("./database/validate_user");
+import express from "express";
+import cors from "cors";
+import mysql from "mysql";
+import config from "./config/config.json" assert { type: "json" };
+import { validateUser } from "./controllers/auth.js";
+import { createAccount } from "./controllers/create_account.js";
 
 const app = express();
-const connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: config.db_name,
-});
-connection.connect();
+mysql
+    .createConnection({
+        host: config.server.port,
+        user: "root",
+        password: "",
+        database: config.database.name,
+    })
+    .connect();
 
-const port = 4000;
-
-app.use(cors()); // allows to receive incoming HTTP requests from other domains
-app.use(express.json()); // allows to receive incoming JSON data from HTTP requests
+app.use(cors()) // allows to receive incoming HTTP requests from other domains
+    .use(express.json()); // allows to receive incoming JSON data from HTTP requests
 
 app.get("/", (request, response) => {
     response.send("Tic-Tac-Toe Game Server!");
 });
 
-// TODO: made mistakes
 app.post("/validate-user", (request, response) => {
-    validate_user.ValidateUser(
-        request.body.login,
-        request.body.password,
-        (resultString) => console.log(resultString),
-        (resultBool) => {
-            // if (resultBool) {
-            //     response.sendStatus(200);
-            // } else {
-            //     response.sendStatus(500);
-            // }
-        }
-    );
+    validateUser(request.body.login, request.body.password);
+    //TODO send status
 });
 
 app.post("/create-account", (request, response) => {
-    insert_user.CreateAccount(
-        request.body.login,
-        request.body.password,
-        (resultString) => console.log(resultString),
-        (resultBool) => {
-            // if (resultBool) {
-            //     response.sendStatus(200);
-            // } else {
-            //     response.sendStatus(500);
-            // }
-        }
-    );
+    createAccount(request.body.login, request.body.password);
 });
 
 app.listen(
-    port,
+    config.server.port,
     console.log(
-        `\x1b[32mServer has been started listening on port ${port}\x1b[37m`
+        `\x1b[32mServer has been started listening on port ${config.server.port}\x1b[37m`
     )
 ).on("error", (error) =>
     console.log(

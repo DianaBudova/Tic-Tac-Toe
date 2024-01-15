@@ -1,0 +1,9 @@
+{
+    "server": {
+        "host": "localhost",
+        "port": 4000
+    },
+    "database": {
+        "name": "tic_tac_toe"
+    }
+}

@@ -29,7 +29,7 @@ const CreateAccount = () => {
 
     const handleSubmitBackToSignIn = (e) => {
         e.preventDefault();
-        navigate("/auth");
+        navigate("/");
     };
 
     return (
