@@ -12,7 +12,7 @@ const CreateAccount = () => {
     const handleSubmitCreateAccount = (e) => {
         e.preventDefault();
         setIsCreating(true);
-        fetch("http://localhost:4000/create-account", {
+        fetch("http://localhost:4000/create-user", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
