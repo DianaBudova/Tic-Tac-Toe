@@ -1,5 +1,5 @@
 import logger from "../common/logger.js";
-import UserController from "../controllers/user_controller.js";
+import UserController from "../controllers/user-controller.js";
 
 export default function (app) {
     app.post("/validate-user", (request, response) => {

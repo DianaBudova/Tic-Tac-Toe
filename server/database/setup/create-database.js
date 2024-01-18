@@ -1,4 +1,4 @@
-import connectionHost from "./connectionHost.js";
+import connectionHost from "./connection-host.js";
 import config from "../../config/config.json" assert { type: "json" };
 import logger from "../../common/logger.js";
 

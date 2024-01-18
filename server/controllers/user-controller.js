@@ -1,9 +1,9 @@
-import connectionDB from "../database/connectionDatabase.js";
+import connectionDatabase from "../database/connection-database.js";
 
 export default class UserController {
     validateUser(login, password, callback) {
         const query = "SELECT * FROM users;";
-        connectionDB.query(query, (error, results) => {
+        connectionDatabase.query(query, (error, results) => {
             if (error) {
                 callback(
                     `\x1b[31mUnable to validate data!\x1b[37m`,
@@ -33,7 +33,7 @@ export default class UserController {
 
     createUser(login, password, callback) {
         const query = `INSERT INTO users (login, password) VALUES ('${login}', '${password}');`;
-        connectionDB.query(query, (error) => {
+        connectionDatabase.query(query, (error) => {
             if (error) {
                 callback(
                     `\x1b[31mUser with login '${login}' creation failed!\x1b[37m`,

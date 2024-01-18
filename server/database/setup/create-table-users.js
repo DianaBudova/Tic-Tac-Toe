@@ -1,4 +1,4 @@
-import connectionDB from "../connectionDatabase.js";
+import connectionDatabase from "../connection-database.js";
 import logger from "../../common/logger.js";
 
 let table_name = "users";
@@ -8,7 +8,7 @@ const query = `CREATE TABLE ${table_name} (
         password VARCHAR(255)
         );`;
 
-connectionDB.query(query, (error) => {
+connectionDatabase.query(query, (error) => {
     if (error) {
         let message = `\x1b[31mTable with name '${table_name}' creation failed!\x1b[37m`;
         console.log(logger.buildLogString(message, error));
@@ -18,4 +18,4 @@ connectionDB.query(query, (error) => {
     console.log(logger.buildLogString(message));
 });
 
-connectionDB.end();
+connectionDatabase.end();
