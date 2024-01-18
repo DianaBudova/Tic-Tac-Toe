@@ -1,4 +1,5 @@
 import connectionDatabase from "../database/connection-database.js";
+import hasher from "../common/hasher.js";
 
 export default class UserController {
     validateUser(login, password, callback) {
@@ -12,7 +13,7 @@ export default class UserController {
                 );
             } else {
                 let exists = results.some(
-                    (item) => item.login == login && item.password == password
+                    (item) => item.login == login && item.password == hasher.MD5(password)
                 );
                 if (exists) {
                     callback(
@@ -32,7 +33,7 @@ export default class UserController {
     }
 
     createUser(login, password, callback) {
-        const query = `INSERT INTO users (login, password) VALUES ('${login}', '${password}');`;
+        const query = `INSERT INTO users (login, password) VALUES ('${login}', '${hasher.MD5(password)}');`;
         connectionDatabase.query(query, (error) => {
             if (error) {
                 callback(
