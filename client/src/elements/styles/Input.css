@@ -1,0 +1,20 @@
+.input {
+    background-color: var(--third-color-darker);
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    padding: 0.5% 1%;
+    transition: 150ms;
+    cursor: pointer;
+}
+
+.input:hover {
+    background-color: var(--third-color);
+    box-shadow: 0px 0px 7px black;
+}
+
+.input:focus {
+    background-color: var(--third-color);
+    box-shadow: 0px 0px 7px black;
+    cursor: auto;
+}

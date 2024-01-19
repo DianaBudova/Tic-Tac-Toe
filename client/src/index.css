@@ -1,6 +1,16 @@
 :root {
-    --first-color: #FF9843;
-    --second-color: #FFDD95;
-    --third-color: #86A7FC;
-    --fourth-color: #3468C0;
+    --first-color: #26943c;
+    --first-color-darker: #0a711f;
+    --second-color: #73d579;
+    --third-color: #bef4c5;
+    --third-color-darker: #a4d1a9;
+
+    --font-family: "Calibri Light";
+    --font-size-large: 34px;
+    --font-size-default: 28px;
+    --font-size-small: 22px;
+}
+
+::selection {
+    background-color: var(--first-color-darker);
 }

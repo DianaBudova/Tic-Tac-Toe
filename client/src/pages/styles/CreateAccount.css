@@ -1,7 +1,35 @@
 .create-account-container {
+    background-image: url("../../../public/images/background-image.png");
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.create-account-container-form {
+    background-color: var(--first-color);
+    border-radius: 10px;
     text-align: center;
+    margin: 0 25%;
+    box-shadow: 0px 0px 7px black;
+}
+
+.create-account-container-form:first-of-type {
+    margin-bottom: 1%;
 }
 
 .create-account-container-item {
-    
+    margin: 2% 0;
+}
+
+.create-account-container-item * {
+    margin: 0.5% 0;
+}
+
+.create-account-container-item * {
+    font-size: var(--font-size-default);
+}
+
+.create-account-container-item-title {
+    font-size: var(--font-size-large);
 }

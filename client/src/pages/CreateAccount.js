@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles/CreateAccount.css";
+import Input from "../elements/Input";
 
 const CreateAccount = () => {
     const [login, setLogin] = useState("");
@@ -40,32 +41,43 @@ const CreateAccount = () => {
                 </div>
             ) : (
                 <>
-                    <form onSubmit={(e) => handleSubmitCreateAccount(e)}>
+                    <form
+                        className="create-account-container-form"
+                        onSubmit={(e) => handleSubmitCreateAccount(e)}
+                    >
                         <div className="create-account-container-item">
-                            <p>Create Account</p>
+                            <p className="create-account-container-item-title">
+                                Create Account
+                            </p>
                         </div>
                         <div className="create-account-container-item">
-                            <p>Your new login:</p>
-                            <input
+                            <p>Your new login</p>
+                            <Input
                                 type="text"
                                 value={login}
                                 onChange={(e) => setLogin(e.target.value)}
                             />
                         </div>
                         <div className="create-account-container-item">
-                            <p>Your new password:</p>
-                            <input
+                            <p>Your new password</p>
+                            <Input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                         <div className="create-account-container-item">
-                            <input type="submit" value="Create" />
+                            <Input type="submit" value="Create" />
                         </div>
                     </form>
-                    <form onSubmit={(e) => handleSubmitBackToSignIn(e)}>
-                        <input type="submit" value="Back to Sign In" />
+                    <form
+                        className="create-account-container-form"
+                        onSubmit={(e) => handleSubmitBackToSignIn(e)}
+                    >
+                        <div className="auth-container-item">
+                            <p>Other features</p>
+                            <Input type="submit" value="Back to Sign In" />
+                        </div>
                     </form>
                 </>
             )}
