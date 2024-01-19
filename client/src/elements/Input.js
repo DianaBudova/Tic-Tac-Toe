@@ -6,6 +6,7 @@ export default function Input({
     placeholder = "",
     onChange,
     spellCheck = false,
+    children
 }) {
     return (
         <input
@@ -15,6 +16,8 @@ export default function Input({
             placeholder={placeholder}
             onChange={onChange}
             spellCheck={spellCheck}
-        />
+        >
+            {children}
+        </input>
     );
 }

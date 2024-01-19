@@ -51,7 +51,7 @@ const CreateAccount = () => {
                             </p>
                         </div>
                         <div className="create-account-container-item">
-                            <p>Your new login</p>
+                            <p className="create-account-container-item-text">Your new login</p>
                             <Input
                                 type="text"
                                 value={login}
@@ -59,7 +59,7 @@ const CreateAccount = () => {
                             />
                         </div>
                         <div className="create-account-container-item">
-                            <p>Your new password</p>
+                            <p className="create-account-container-item-text">Your new password</p>
                             <Input
                                 type="password"
                                 value={password}

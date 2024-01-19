@@ -37,7 +37,7 @@ const Auth = () => {
         <div className="auth-container">
             {isValidating ? (
                 <div className="auth-container-item">
-                    <p>Validating data...</p>
+                    <p className="auth-container-item-title">Validating data...</p>
                 </div>
             ) : (
                 <>
@@ -51,7 +51,7 @@ const Auth = () => {
                             </p>
                         </div>
                         <div className="auth-container-item">
-                            <p>Login</p>
+                            <p className="auth-container-item-text">Login</p>
                             <Input
                                 type="text"
                                 value={login}
@@ -59,14 +59,12 @@ const Auth = () => {
                             />
                         </div>
                         <div className="auth-container-item">
-                            <p>Password</p>
+                            <p className="auth-container-item-text">Password</p>
                             <Input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                            >
-                                <button>greg</button>
-                            </Input>
+                            />
                         </div>
                         <div className="auth-container-item">
                             <Input type="submit" value="Sign In" />
@@ -77,8 +75,17 @@ const Auth = () => {
                         onSubmit={(e) => handleSubmitCreateAccount(e)}
                     >
                         <div className="auth-container-item">
-                            <p>or Sign Up</p>
+                            <p>Don't have account? Sign Up</p>
                             <Input type="submit" value="Create a new account" />
+                        </div>
+                    </form>
+                    <form
+                        className="auth-container-form"
+                        onSubmit={(e) => handleSubmitCreateAccount(e)}
+                    >
+                        <div className="auth-container-item">
+                            <p>or continue as a Guest</p>
+                            <Input type="submit" value="Play as a Guest" />
                         </div>
                     </form>
                 </>

@@ -31,5 +31,9 @@
 }
 
 .create-account-container-item-title {
+    font-size: var(--font-size-extra-large);
+}
+
+.create-account-container-item-text {
     font-size: var(--font-size-large);
 }
