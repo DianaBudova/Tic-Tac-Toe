@@ -1,7 +1,7 @@
 :root {
     --first-color: #26943c;
     --first-color-lighter: #41b458;
-    --first-color-darker: #0a711f;
+    --first-color-darker: #09611a;
     --second-color: #73d579;
     --third-color: #bef4c5;
     --third-color-darker: #a4d1a9;
@@ -15,4 +15,9 @@
 
 ::selection {
     background-color: var(--first-color-darker);
+}
+
+* {
+    margin: 0;
+    font-family: var(--font-family);
 }

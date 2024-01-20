@@ -8,7 +8,11 @@ export default function (app) {
             values.login,
             values.password,
             (message, error, statusCode) => {
-                console.log(logger.buildLogString(message, error, statusCode));
+                if (statusCode === 200) {
+                    console.log(logger.buildSuccessString(message, statusCode));
+                } else {
+                    console.log(logger.buildErrorString(message, error, statusCode));
+                }
                 response.sendStatus(statusCode);
             }
         );
@@ -20,7 +24,11 @@ export default function (app) {
             reqBody.login,
             reqBody.password,
             (message, error, statusCode) => {
-                console.log(logger.buildLogString(message, error, statusCode));
+                if (statusCode === 200) {
+                    console.log(logger.buildSuccessString(message, statusCode));
+                } else {
+                    console.log(logger.buildErrorString(message, error, statusCode));
+                }
                 response.sendStatus(statusCode);
             }
         );

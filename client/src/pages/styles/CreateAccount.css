@@ -12,6 +12,7 @@
     text-align: center;
     margin: 0 25%;
     box-shadow: 0px 0px 7px black;
+    animation: pop-up 0.3s;
 }
 
 .create-account-container-form:first-of-type {
@@ -36,4 +37,14 @@
 
 .create-account-container-item-text {
     font-size: var(--font-size-large);
+}
+
+@keyframes pop-up {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }

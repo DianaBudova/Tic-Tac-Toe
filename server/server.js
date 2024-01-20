@@ -17,14 +17,14 @@ app.listen(
     port,
     config.server.host,
     console.log(
-        logger.buildLogString(
-            `\x1b[32mServer has been started listening on port ${port}.\x1b[37m`
+        logger.buildSuccessString(
+            `Server has been started listening on port ${port}.`
         )
     )
-).on('error', (error) =>
+).on("error", (error) =>
     console.log(
-        logger.buildLogString(
-            `\x1b[31mSome error occured while trying to start listening! ${error}\x1b[37m`
+        logger.buildErrorString(
+            `Some error occured while trying to start listening! ${error}`
         )
     )
 );

@@ -10,12 +10,12 @@ const query = `CREATE TABLE ${table_name} (
 
 connectionDatabase.query(query, (error) => {
     if (error) {
-        let message = `\x1b[31mTable with name '${table_name}' creation failed!\x1b[37m`;
-        console.log(logger.buildLogString(message, error));
+        let message = `Table with name '${table_name}' creation failed!`;
+        console.log(logger.buildErrorString(message, error));
         return;
     }
-    let message = `\x1b[32mTable with name '${table_name}' creation successful!\x1b[37m`;
-    console.log(logger.buildLogString(message));
+    let message = `Table with name '${table_name}' creation successful!`;
+    console.log(logger.buildSuccessString(message));
 });
 
 connectionDatabase.end();

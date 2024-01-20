@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Input from "../elements/Input";
 import "./styles/Auth.css";
+import Input from "../elements/Input";
+import Submit from "../elements/Submit";
+import PopUp from "../elements/PopUp";
+import Loading from "../elements/Loading";
 
 const Auth = () => {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
     const [isValidating, setIsValidating] = useState(false);
-
     const navigate = useNavigate();
 
     const handleSubmitSignIn = (e) => {
@@ -22,10 +26,18 @@ const Auth = () => {
                 login: login,
                 password: password,
             }),
-        }).catch((error) => console.log(error));
-        setLogin("");
-        setPassword("");
-        setIsValidating(false);
+        })
+            .then((response) =>
+                response.ok
+                    ? setMessage("You have signed successfully 😺")
+                    : setMessage("Invalid login or password 🐱")
+            )
+            .catch(() => setError("Error when validating user 😿"))
+            .finally(() => {
+                setLogin("");
+                setPassword("");
+                setIsValidating(false);
+            });
     };
 
     const handleSubmitCreateAccount = (e) => {
@@ -35,61 +47,59 @@ const Auth = () => {
 
     return (
         <div className="auth-container">
+            {error ? <PopUp text={error} setText={setError} /> : <></>}
+            {message ? <PopUp text={message} setText={setMessage} /> : <></>}
             {isValidating ? (
-                <div className="auth-container-item">
-                    <p className="auth-container-item-title">Validating data...</p>
-                </div>
+                <Loading
+                    text="Validating data..."
+                    isLoading={isValidating}
+                    setIsLoading={setIsValidating}
+                />
             ) : (
-                <>
-                    <form
-                        className="auth-container-form"
-                        onSubmit={(e) => handleSubmitSignIn(e)}
-                    >
-                        <div className="auth-container-item">
-                            <p className="auth-container-item-title">
-                                Authentication
-                            </p>
-                        </div>
-                        <div className="auth-container-item">
-                            <p className="auth-container-item-text">Login</p>
-                            <Input
-                                type="text"
-                                value={login}
-                                onChange={(e) => setLogin(e.target.value)}
-                            />
-                        </div>
-                        <div className="auth-container-item">
-                            <p className="auth-container-item-text">Password</p>
-                            <Input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                        <div className="auth-container-item">
-                            <Input type="submit" value="Sign In" />
-                        </div>
-                    </form>
-                    <form
-                        className="auth-container-form"
-                        onSubmit={(e) => handleSubmitCreateAccount(e)}
-                    >
-                        <div className="auth-container-item">
-                            <p>Don't have account? Sign Up</p>
-                            <Input type="submit" value="Create a new account" />
-                        </div>
-                    </form>
-                    <form
-                        className="auth-container-form"
-                        onSubmit={(e) => handleSubmitCreateAccount(e)}
-                    >
-                        <div className="auth-container-item">
-                            <p>or continue as a Guest</p>
-                            <Input type="submit" value="Play as a Guest" />
-                        </div>
-                    </form>
-                </>
+                <></>
             )}
+            <form
+                className="auth-container-form"
+                onSubmit={(e) => handleSubmitSignIn(e)}
+            >
+                <div className="auth-container-item">
+                    <p className="auth-container-item-title">Authentication</p>
+                </div>
+                <div className="auth-container-item">
+                    <p className="auth-container-item-text">Login</p>
+                    <Input
+                        type="text"
+                        value={login}
+                        onChange={(e) => setLogin(e.target.value)}
+                    />
+                </div>
+                <div className="auth-container-item">
+                    <p className="auth-container-item-text">Password</p>
+                    <Input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <div className="auth-container-item">
+                    <Submit value="Sign In" />
+                </div>
+            </form>
+            <form
+                className="auth-container-form"
+                onSubmit={(e) => handleSubmitCreateAccount(e)}
+            >
+                <div className="auth-container-item">
+                    <p>Don't have account? Sign Up</p>
+                    <Submit value="Create a new account" />
+                </div>
+            </form>
+            <form className="auth-container-form">
+                <div className="auth-container-item">
+                    <p>or continue as a Guest</p>
+                    <Submit value="Play as a Guest" />
+                </div>
+            </form>
         </div>
     );
 };

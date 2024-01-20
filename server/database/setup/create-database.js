@@ -7,12 +7,12 @@ const query = `CREATE DATABASE ${db_name};`;
 
 connectionHost.query(query, (error) => {
     if (error) {
-        let message = `\x1b[31mDatabase with name '${db_name}' creation failed!\x1b[37m`;
-        console.log(logger.buildLogString(message, error));
+        let message = `Database with name '${db_name}' creation failed!`;
+        console.log(logger.buildErrorString(message, error));
         return;
     }
-    let message = `\x1b[32mDatabase with name '${db_name}' creation successful!\x1b[37m`;
-    console.log(logger.buildLogString(message));
+    let message = `Database with name '${db_name}' creation successful!`;
+    console.log(logger.buildSuccessString(message));
 });
 
 connectionHost.end();

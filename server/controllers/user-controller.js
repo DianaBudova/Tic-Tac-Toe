@@ -7,23 +7,25 @@ export default class UserController {
         connectionDatabase.query(query, (error, results) => {
             if (error) {
                 callback(
-                    `\x1b[31mUnable to validate data!\x1b[37m`,
+                    `Unable to validate data!`,
                     error,
                     500
                 );
             } else {
                 let exists = results.some(
-                    (item) => item.login == login && item.password == hasher.MD5(password)
+                    (item) =>
+                        item.login == login &&
+                        item.password == hasher.MD5(password)
                 );
                 if (exists) {
                     callback(
-                        `\x1b[32mUser with login '${login}' logged in!\x1b[37m`,
+                        `User with login '${login}' logged in!`,
                         undefined,
                         200
                     );
                 } else {
                     callback(
-                        `\x1b[31mUser with login '${login}' failed to log in!\x1b[37m`,
+                        `User with login '${login}' failed to log in!`,
                         undefined,
                         500
                     );
@@ -33,17 +35,19 @@ export default class UserController {
     }
 
     createUser(login, password, callback) {
-        const query = `INSERT INTO users (login, password) VALUES ('${login}', '${hasher.MD5(password)}');`;
+        const query = `INSERT INTO users (login, password) VALUES ('${login}', '${hasher.MD5(
+            password
+        )}');`;
         connectionDatabase.query(query, (error) => {
             if (error) {
                 callback(
-                    `\x1b[31mUser with login '${login}' creation failed!\x1b[37m`,
+                    `User with login '${login}' creation failed!`,
                     error,
                     500
                 );
             } else {
                 callback(
-                    `\x1b[32mUser with login '${login}' creation successful!\x1b[37m`,
+                    `User with login '${login}' creation successful!`,
                     undefined,
                     200
                 );

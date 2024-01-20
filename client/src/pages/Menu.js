@@ -1,9 +1,19 @@
-const Menu = () => {
-  return (
-    <div className="menu-container">
+import Button from "../elements/Button";
 
-    </div>
-  )
-}
+const Menu = () => {
+    const handleOnClickStart = () => {};
+
+    const handleOnClickShowStatistic = () => {};
+
+    const handleOnClickQuit = () => {};
+
+    return (
+        <div className="menu-container">
+            <Button onClick={handleOnClickStart}>Start Game</Button>
+            <Button onClick={handleOnClickShowStatistic}>Show Statistic</Button>
+            <Button onClick={handleOnClickQuit}>Quit the Game</Button>
+        </div>
+    );
+};
 
 export default Menu;
