@@ -1,12 +1,13 @@
 :root {
     --first-color: #26943c;
     --first-color-lighter: #41b458;
-    --first-color-darker: #09611a;
+    --first-color-darker: #085918;
     --second-color: #73d579;
     --third-color: #bef4c5;
     --third-color-darker: #a4d1a9;
 
-    --font-family: "Calibri Light";
+    --font-family-light: "Calibri Light";
+    --font-family-default: "Calibri";
     --font-size-extra-large: 38px;
     --font-size-large: 32px;
     --font-size-default: 26px;
@@ -15,9 +16,10 @@
 
 ::selection {
     background-color: var(--first-color-darker);
+    color: var(--third-color)
 }
 
 * {
     margin: 0;
-    font-family: var(--font-family);
+    font-family: var(--font-family-light);
 }

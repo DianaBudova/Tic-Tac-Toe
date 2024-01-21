@@ -15,6 +15,19 @@
     animation: pop-up 0.3s;
 }
 
+.create-account-container-form:first-of-type Button {
+    margin-left: 1%;
+    margin-right: -7.5%;
+}
+
+.create-account-container-form:last-of-type Button:first-of-type {
+    margin-right: 2%;
+}
+
+.create-account-container-form:last-of-type Button:last-of-type {
+    margin-left: 2%;
+}
+
 .create-account-container-form:first-of-type {
     margin-bottom: 1%;
 }
@@ -32,6 +45,7 @@
 }
 
 .create-account-container-item-title {
+    font-family: var(--font-family-default);
     font-size: var(--font-size-extra-large);
 }
 
