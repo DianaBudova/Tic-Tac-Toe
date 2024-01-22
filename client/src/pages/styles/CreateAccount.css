@@ -52,13 +52,3 @@
 .create-account-container-item-text {
     font-size: var(--font-size-large);
 }
-
-@keyframes pop-up {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}

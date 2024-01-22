@@ -21,7 +21,7 @@
 
 .auth-container-form:first-of-type Button {
     margin-left: 1%;
-    margin-right: -7.5%;
+    margin-right: -8.5%;
 }
 
 .auth-container-form:nth-of-type(2) {
@@ -30,6 +30,10 @@
 
 .auth-container-item {
     margin: 2% 0;
+}
+
+.auth-container-item input[type="password"] {
+    flex-grow: 1;
 }
 
 .auth-container-item * {
@@ -47,14 +51,4 @@
 
 .auth-container-item-text {
     font-size: var(--font-size-large);
-}
-
-@keyframes pop-up {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
 }
