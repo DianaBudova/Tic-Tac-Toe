@@ -1,6 +1,5 @@
 .button {
     background-color: var(--third-color-darker);
-    font-family: var(--font-family-default);
     border-radius: 10px;
     border: none;
     outline: none;

@@ -43,3 +43,8 @@
         opacity: 0;
     }
 }
+
+@keyframes slide {
+    from { background-position: 0 0; }
+    to { background-position: 0 -2666%; } /* 626% - X */
+}
