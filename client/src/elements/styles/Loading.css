@@ -29,7 +29,6 @@
 
 .loading-container p {
     font-size: var(--font-size-extra-large);
-    margin-bottom: 5%;
     word-wrap: break-word;
 }
 

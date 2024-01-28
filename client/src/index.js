@@ -5,19 +5,20 @@ import "./index.css";
 import Auth from "./pages/Auth.js";
 import CreateAccount from "./pages/CreateAccount.js";
 import Menu from "./pages/Menu.js";
+import IsAuth from "./pages/IsAuth.js";
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: "/auth/sign-in",
         element: <Auth />,
     },
     {
-        path: "/creating-account",
+        path: "/auth/creating-account",
         element: <CreateAccount />,
     },
     {
         path: "/menu",
-        element: <Menu />,
+        element: <IsAuth Component={Menu} />,
     },
 ]);
 

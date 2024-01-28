@@ -4,6 +4,8 @@
         "port": 4000
     },
     "database": {
+        "user": "root",
+        "password": "",
         "name": "tic_tac_toe"
     }
 }

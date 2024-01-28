@@ -47,12 +47,12 @@ const CreateAccount = () => {
 
     const handleOnClickBackToSignIn = (e) => {
         e.preventDefault();
-        navigate("/");
+        navigate("/auth/sign-in");
     };
 
     const handleOnClickPlayAsGuest = (e) => {
         e.preventDefault();
-        navigate("/");
+        navigate("/auth/sign-in");
     };
 
     const handleOnClickSwitchPassword = (e) => {

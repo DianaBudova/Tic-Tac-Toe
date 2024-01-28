@@ -1,0 +1,6 @@
+{
+    "routes": {
+        "validate-user": "http://localhost:4000/validate-user",
+        "create-user": "http://localhost:4000/validate-user"
+    }
+}

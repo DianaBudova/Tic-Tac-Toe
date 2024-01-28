@@ -32,8 +32,10 @@ const Auth = () => {
         })
             .then((response) =>
                 response.ok
-                    ? setMessage("You have signed successfully 😺")
-                    : setMessage("Invalid login or password 🐱")
+                    ? setMessage("You have signed successfully 😺") &&
+                      sessionStorage.setItem("isAuth", "true")
+                    : setMessage("Invalid login or password 🐱") &&
+                      sessionStorage.setItem("isAuth", "false")
             )
             .catch(() => setError("Error when validating user 😿"))
             .finally(() => {
@@ -45,7 +47,7 @@ const Auth = () => {
 
     const handleSubmitCreateAccount = (e) => {
         e.preventDefault();
-        navigate("/creating-account");
+        navigate("/auth/creating-account");
     };
 
     const handleOnClickSwitchPassword = (e) => {
@@ -63,15 +65,7 @@ const Auth = () => {
         <div className="auth-container">
             {error ? <PopUp text={error} setText={setError} /> : <></>}
             {message ? <PopUp text={message} setText={setMessage} /> : <></>}
-            {isValidating ? (
-                <Loading
-                    text="Validating data..."
-                    isLoading={isValidating}
-                    setIsLoading={setIsValidating}
-                />
-            ) : (
-                <></>
-            )}
+            {isValidating ? <Loading text="Validating data..." /> : <></>}
             <form
                 className="auth-container-form"
                 onSubmit={(e) => handleSubmitSignIn(e)}
