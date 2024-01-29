@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import "./styles/Auth.css";
 import Input from "../elements/Input";
 import Submit from "../elements/Submit";
@@ -17,6 +18,12 @@ const Auth = () => {
     const navigate = useNavigate();
     const imgRef = useRef();
 
+    useEffect(() => {
+        if (Cookies.get("login") != undefined) {
+            navigate("/menu");
+        }
+    });
+
     const handleSubmitSignIn = (e) => {
         e.preventDefault();
         setIsValidating(true);
@@ -30,13 +37,12 @@ const Auth = () => {
                 password: password,
             }),
         })
-            .then((response) =>
+            .then((response) => {
                 response.ok
-                    ? setMessage("You have signed successfully 😺") &&
-                      sessionStorage.setItem("isAuth", "true")
-                    : setMessage("Invalid login or password 🐱") &&
-                      sessionStorage.setItem("isAuth", "false")
-            )
+                    ? (setMessage("You have signed successfully 😺"),
+                      Cookies.set("login", login))
+                    : setMessage("Invalid login or password 🐱");
+            })
             .catch(() => setError("Error when validating user 😿"))
             .finally(() => {
                 setLogin("");
@@ -92,7 +98,7 @@ const Auth = () => {
                         <img
                             ref={imgRef}
                             src="/images/icons/opened-eye.png"
-                            width={22}
+                            height={20}
                         ></img>
                     </Button>
                 </div>

@@ -50,3 +50,7 @@
 .create-account-container-item-text {
     font-size: var(--font-size-large);
 }
+
+.create-account-container-item-text-button {
+    font-family: var(--font-family-default);
+}

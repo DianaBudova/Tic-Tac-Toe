@@ -64,8 +64,8 @@ const CreateAccount = () => {
             setPasswordType("password");
             imgRef.current.src = "/images/icons/opened-eye.png";
         }
-    }
-    
+    };
+
     return (
         <div className="create-account-container">
             {error ? <PopUp text={error} setText={setError} /> : <></>}
@@ -107,7 +107,13 @@ const CreateAccount = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Button onClick={(e) => handleOnClickSwitchPassword(e)}><img ref={imgRef} width={22} src="/images/icons/opened-eye.png"></img></Button>
+                    <Button onClick={(e) => handleOnClickSwitchPassword(e)}>
+                        <img
+                            ref={imgRef}
+                            src="/images/icons/opened-eye.png"
+                            width={20}
+                        ></img>
+                    </Button>
                 </div>
                 <div className="create-account-container-item">
                     <Submit value="Create" />
@@ -119,10 +125,14 @@ const CreateAccount = () => {
                         <b>Other options</b>
                     </p>
                     <Button onClick={(e) => handleOnClickBackToSignIn(e)}>
-                        Back to Sign In
+                        <p className="create-account-container-item-text-button">
+                            Back to Sign In
+                        </p>
                     </Button>
                     <Button onClick={(e) => handleOnClickPlayAsGuest(e)}>
-                        Play as a Guest
+                        <p className="create-account-container-item-text-button">
+                            Play as a Guest
+                        </p>
                     </Button>
                 </div>
             </form>

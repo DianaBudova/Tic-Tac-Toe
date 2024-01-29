@@ -1,3 +1,3 @@
 1. Reconnect to database when was error connection.
-2. Set up correct opening menu page only when use has authorized (IsAuth.js, Auth.js).
-3. Make navigation in Auth.js to validate user by config.json in folder 'public'.
+2. Make navigation in Auth.js to validate user by config.json in folder 'public'.
+3. Make routes in config.json in folder 'public'.
