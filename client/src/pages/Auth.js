@@ -13,7 +13,6 @@ const Auth = () => {
     const [password, setPassword] = useState("");
     const [passwordType, setPasswordType] = useState("password");
     const [message, setMessage] = useState("");
-    const [error, setError] = useState("");
     const [isValidating, setIsValidating] = useState(false);
     const navigate = useNavigate();
     const imgRef = useRef();
@@ -37,13 +36,12 @@ const Auth = () => {
                 password: password,
             }),
         })
-            .then((response) => {
+            .then((response) =>
                 response.ok
-                    ? (setMessage("You have signed successfully 😺"),
-                      Cookies.set("login", login))
-                    : setMessage("Invalid login or password 🐱");
-            })
-            .catch(() => setError("Error when validating user 😿"))
+                    ? Cookies.set("login", login) // (setMessage("You have signed successfully 😺")
+                    : setMessage("Invalid login or password 🐱")
+            )
+            .catch(() => setMessage("Error when validating user 😿"))
             .finally(() => {
                 setLogin("");
                 setPassword("");
@@ -67,9 +65,14 @@ const Auth = () => {
         }
     };
 
+    const handleSubmitPlayAsGuest = (e) => {
+        e.preventDefault();
+        Cookies.set("login", "guest");
+        navigate("/menu");
+    };
+
     return (
         <div className="auth-container">
-            {error ? <PopUp text={error} setText={setError} /> : <></>}
             {message ? <PopUp text={message} setText={setMessage} /> : <></>}
             {isValidating ? <Loading text="Validating data..." /> : <></>}
             <form
@@ -117,7 +120,10 @@ const Auth = () => {
                     <Submit value="Create a new account" />
                 </div>
             </form>
-            <form className="auth-container-form">
+            <form
+                className="auth-container-form"
+                onSubmit={(e) => handleSubmitPlayAsGuest(e)}
+            >
                 <div className="auth-container-item">
                     <p>
                         or continue as a <b>Guest</b>

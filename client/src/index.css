@@ -12,6 +12,10 @@
     --font-size-large: 32px;
     --font-size-default: 26px;
     --font-size-small: 20px;
+
+    background-image: url("../public/images/background-image-blured.png");
+    background-size: stretch;
+    animation: slide 10s linear infinite;
 }
 
 ::selection {
@@ -46,5 +50,5 @@
 
 @keyframes slide {
     from { background-position: 0 0; }
-    to { background-position: 0 -2666%; } /* 626% - X */
+    to { background-position: 0 -315.4%; }
 }

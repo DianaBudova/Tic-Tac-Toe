@@ -32,7 +32,7 @@ const Menu = () => {
             <div className="menu-container-form">
                 <div className="menu-container-item">
                     <p className="menu-container-item-title">
-                        Welcome to Tic-Tac-Toe!
+                        Welcome, {Cookies.get("login").charAt(0).toUpperCase() + Cookies.get("login").slice(1)}!
                     </p>
                 </div>
                 <div className="menu-container-item">

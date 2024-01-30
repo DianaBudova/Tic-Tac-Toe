@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import "./styles/CreateAccount.css";
 import Input from "../elements/Input";
 import Submit from "../elements/Submit";
@@ -12,7 +13,6 @@ const CreateAccount = () => {
     const [password, setPassword] = useState("");
     const [passwordType, setPasswordType] = useState("password");
     const [message, setMessage] = useState("");
-    const [error, setError] = useState("");
     const [isCreating, setIsCreating] = useState(false);
     const navigate = useNavigate();
     const imgRef = useRef();
@@ -37,7 +37,7 @@ const CreateAccount = () => {
                       )
                     : setMessage("Sorry! Such the login is already taken 🐱")
             )
-            .catch(() => setError("Error when creating an account 😿"))
+            .catch(() => setMessage("Error when creating an account 😿"))
             .finally(() => {
                 setLogin("");
                 setPassword("");
@@ -52,7 +52,8 @@ const CreateAccount = () => {
 
     const handleOnClickPlayAsGuest = (e) => {
         e.preventDefault();
-        navigate("/auth/sign-in");
+        Cookies.set("login", "guest");
+        navigate("/menu");
     };
 
     const handleOnClickSwitchPassword = (e) => {
@@ -68,7 +69,6 @@ const CreateAccount = () => {
 
     return (
         <div className="create-account-container">
-            {error ? <PopUp text={error} setText={setError} /> : <></>}
             {message ? <PopUp text={message} setText={setMessage} /> : <></>}
             {isCreating ? (
                 <Loading

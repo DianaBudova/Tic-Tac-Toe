@@ -1,11 +1,8 @@
 .create-account-container {
-    background-image: url("../../../public/images/background-image-blured.png");
-    background-size: cover;
     display: flex;
     justify-content: center;
     flex-direction: column;
     height: 100vh;
-    animation: slide 10s linear infinite;
 }
 
 .create-account-container-form {
