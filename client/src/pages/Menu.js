@@ -35,6 +35,9 @@ const Menu = () => {
                         Welcome, {Cookies.get("login").charAt(0).toUpperCase() + Cookies.get("login").slice(1)}!
                     </p>
                 </div>
+            </div>
+
+            <div className="menu-container-form">
                 <div className="menu-container-item">
                     <Button onClick={(e) => handleOnClickStart(e)}>
                         <p className="menu-container-item-text">Start Game</p>

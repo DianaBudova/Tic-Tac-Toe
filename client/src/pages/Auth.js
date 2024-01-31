@@ -97,7 +97,7 @@ const Auth = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Button onClick={(e) => handleOnClickSwitchPassword(e)}>
+                    <Button className="eee" onClick={(e) => handleOnClickSwitchPassword(e)}>
                         <img
                             ref={imgRef}
                             src="/images/icons/opened-eye.png"

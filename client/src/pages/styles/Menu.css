@@ -14,18 +14,23 @@
     animation: pop-up 0.3s;
 }
 
+.menu-container-form:first-of-type {
+    margin-bottom: 1%;
+}
+
 .menu-container-item {
     margin: 2% 0;
 }
 
 .menu-container-item * {
-    margin: 0.5% 0;
-    font-size: var(--font-size-default);
+    margin: 0% 0;
+    font-size: var(--font-size-large);
 }
 
 .menu-container-item-title {
     font-family: var(--font-family-default);
-    font-size: var(--font-size-extra-large);
+    font-size: var(--font-size-extra-extra-large);
+    margin: 3% 0;
 }
 
 .menu-container-item-text {
