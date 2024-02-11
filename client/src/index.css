@@ -1,15 +1,14 @@
 :root {
-    --first-color: #26943c;
-    --first-color-lighter: #41b458;
-    --first-color-darker: #085918;
-    --second-color: #73d579;
-    --third-color: #bef4c5;
-    --third-color-darker: #a4d1a9;
+    --first-color: #179a47;
+    --first-color-lighter: #41b46b;
+    --first-color-darker: #085926;
+    --second-color: #73d587;
+    --third-color: #bef4c9;
+    --third-color-darker: #a4d1ac;
 
     --font-family-light: "Calibri Light";
     --font-family-default: "Calibri";
     --font-size-extra-large: 38px;
-    --font-size-extra-extra-large: 42px;
     --font-size-large: 32px;
     --font-size-default: 26px;
     --font-size-small: 20px;
@@ -51,5 +50,5 @@
 
 @keyframes slide {
     from { background-position: 0 0; }
-    to { background-position: 0 -315.4%; }
+    to { background-position: 0 1080px; }
 }

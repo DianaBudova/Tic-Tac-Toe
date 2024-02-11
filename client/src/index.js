@@ -5,6 +5,8 @@ import "./index.css";
 import Auth from "./pages/Auth.js";
 import CreateAccount from "./pages/CreateAccount.js";
 import Menu from "./pages/Menu.js";
+import Game from "./pages/Game.js";
+import Statistic from "./pages/Statistic.js";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
     {
         path: "/menu",
         element: <Menu />,
+    },
+    {
+        path: "/game",
+        element: <Game />,
+    },
+    {
+        path: "/statistic",
+        element: <Statistic />,
     },
 ]);
 

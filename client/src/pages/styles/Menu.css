@@ -10,12 +10,13 @@
     border-radius: 10px;
     text-align: center;
     margin: 0 25%;
+    margin-bottom: 1%;
     box-shadow: 0px 0px 7px black;
     animation: pop-up 0.3s;
 }
 
-.menu-container-form:first-of-type {
-    margin-bottom: 1%;
+.menu-container-form:last-of-type {
+    margin-bottom: -1%;
 }
 
 .menu-container-item {
@@ -24,12 +25,12 @@
 
 .menu-container-item * {
     margin: 0% 0;
-    font-size: var(--font-size-large);
+    font-size: var(--font-size-default);
 }
 
 .menu-container-item-title {
     font-family: var(--font-family-default);
-    font-size: var(--font-size-extra-extra-large);
+    font-size: var(--font-size-extra-large);
     margin: 3% 0;
 }
 

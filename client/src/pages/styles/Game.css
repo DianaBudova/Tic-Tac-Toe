@@ -1,0 +1,51 @@
+.game-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.game-container-form {
+    background-color: var(--first-color);
+    border-radius: 10px;
+    text-align: center;
+    margin: 0 25%;
+    box-shadow: 0px 0px 7px black;
+    animation: pop-up 0.3s;
+}
+
+.game-container-form:first-of-type {
+    margin-bottom: 1%;
+}
+
+.game-container-form:first-of-type Button {
+    margin-left: 1%;
+    margin-right: -8.5%;
+}
+
+.game-container-form:nth-of-type(2) {
+    margin-bottom: 1%;
+}
+
+.game-container-form span:nth-of-type(2) {
+    font-family: var(--font-family-default);
+    font-size: var(--font-size-extra-large);
+    margin: 0 10%;
+}
+
+.game-container-item {
+    margin: 2% 0;
+}
+
+.game-container-item * {
+    font-size: var(--font-size-default);
+}
+
+.game-container-item-title {
+    font-family: var(--font-family-default);
+    font-size: var(--font-size-extra-large);
+}
+
+.game-container-item-text {
+    font-size: var(--font-size-large);
+}

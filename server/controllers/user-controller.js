@@ -38,9 +38,6 @@ export default class UserController {
         const query = `INSERT INTO users (login, password) VALUES ('${login}', '${hasher.MD5(
             password
         )}');`;
-        if (connectionDatabase.state == "disconnected") {
-            connectionDatabase.connect
-        }
         connectionDatabase.query(query, (error) => {
             if (error) {
                 callback(
