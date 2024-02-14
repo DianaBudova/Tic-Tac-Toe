@@ -20,11 +20,16 @@
 }
 
 .create-account-container-form:last-of-type Button:first-of-type {
+    margin-left: 0;
+}
+
+.create-account-container-form:last-of-type Button {
+    margin-left: 2%;
     margin-right: 2%;
 }
 
 .create-account-container-form:last-of-type Button:last-of-type {
-    margin-left: 2%;
+    margin-right: 0;
 }
 
 .create-account-container-form:first-of-type {
