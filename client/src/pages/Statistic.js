@@ -3,15 +3,52 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./styles/Statistic.css";
 import Button from "../elements/Button";
+import PopUp from "../elements/PopUp";
 
 const Statistic = () => {
     const [login, setLogin] = useState(Cookies.get("login"));
+    const [wins, setWins] = useState();
+    const [failures, setFailures] = useState();
+    const [games, setGames] = useState();
+    const [message, setMessage] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
         if (login === undefined) {
             navigate("/auth/sign-in");
+            return;
         }
+        fetch("http://localhost:4000/get-id-by-login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                login: login,
+            }),
+        }).then((response) => {
+            response.json().then((data) => {
+                fetch("http://localhost:4000/get-statistic-by-id", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        login_id: data.id,
+                    }),
+                }).then((response) => {
+                    if (response.status !== 200) {
+                        setMessage("Error when getting statistic 😿");
+                        return;
+                    }
+                    response.json().then((data) => {
+                        setWins(data.data.wins);
+                        setFailures(data.data.failures);
+                        setGames(data.data.games);
+                    });
+                });
+            });
+        });
     });
 
     const handleOnClickBackToMenu = (e) => {
@@ -21,25 +58,26 @@ const Statistic = () => {
         } else {
             navigate("/menu");
         }
-    }
+    };
 
     return (
         <div className="statistic-container">
+            {message ? <PopUp text={message} setText={setMessage} /> : <></>}
             <div className="statistic-container-form">
                 <p className="statistic-container-title">Statistic</p>
             </div>
             <div className="statistic-container-form">
                 <div className="statistic-container-item">
                     <p className="statistic-container-text">Wins</p>
-                    <p className="statistic-container-text">2</p>
+                    <p className="statistic-container-text">{wins}</p>
                 </div>
                 <div className="statistic-container-item">
                     <p className="statistic-container-text">Failures</p>
-                    <p className="statistic-container-text">1</p>
+                    <p className="statistic-container-text">{failures}</p>
                 </div>
                 <div className="statistic-container-item">
                     <p className="statistic-container-text">Games</p>
-                    <p className="statistic-container-text">1423</p>
+                    <p className="statistic-container-text">{games}</p>
                 </div>
             </div>
             <div className="statistic-container-form">

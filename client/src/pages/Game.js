@@ -39,7 +39,7 @@ const Game = () => {
         }
         if (availableCells < 5) {
             if (isUserWin()) {
-                setMessage("User win 😸");
+                setMessage("You win 😸");
                 setUserPoints(userPoints + 1);
                 setIsOpponentFirst(false);
             } else if (isOpponentWin()) {
@@ -50,7 +50,7 @@ const Game = () => {
         }
         if (availableCells == 0) {
             if (isUserWin()) {
-                setMessage("User win 😸");
+                setMessage("You win 😸");
                 setUserPoints(userPoints + 1);
                 setIsOpponentFirst(false);
             } else if (isOpponentWin()) {

@@ -44,6 +44,7 @@ export default function (app) {
                     console.log(logger.buildSuccessString(message, statusCode));
                 } else {
                     console.log(logger.buildErrorString(message, error, statusCode));
+                    response.sendStatus(statusCode);
                 }
             }
         );

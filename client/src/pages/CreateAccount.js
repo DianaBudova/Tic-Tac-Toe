@@ -29,20 +29,51 @@ const CreateAccount = () => {
                 login: login,
                 password: password,
             }),
-        })
-            .then((response) =>
-                response.ok
-                    ? setMessage(
-                          "Congratulations! You have created an account 😺"
-                      )
-                    : setMessage("Sorry! Such the login is already taken 🐱")
-            )
-            .catch(() => setMessage("Error when creating an account 😿"))
-            .finally(() => {
-                setLogin("");
-                setPassword("");
-                setIsCreating(false);
-            });
+        });
+        let loginId;
+        fetch("http://localhost:4000/get-id-by-login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                login: login,
+            }),
+        }).then((response) => {
+            response
+                .json()
+                .then((data) => {
+                    loginId = data.id;
+                })
+                .finally(() => {
+                    fetch("http://localhost:4000/create-statistic", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            login_id: loginId,
+                        }),
+                    })
+                        .then((response) =>
+                            response.ok
+                                ? setMessage(
+                                      "Congratulations! You have created an account 😺"
+                                  )
+                                : setMessage(
+                                      "Sorry! Such the login is already taken 🐱"
+                                  )
+                        )
+                        .catch(() =>
+                            setMessage("Error when creating an account 😿")
+                        )
+                        .finally(() => {
+                            setLogin("");
+                            setPassword("");
+                            setIsCreating(false);
+                        });
+                });
+        });
     };
 
     const handleOnClickBackToSignIn = (e) => {

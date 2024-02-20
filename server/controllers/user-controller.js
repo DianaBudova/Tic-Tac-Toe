@@ -57,8 +57,8 @@ export default class UserController {
 
     getIdByLogin(login, callback) {
         const query = `SELECT id FROM users WHERE login='${login}';`;
-        let number = connectionDatabase.query(query, (error, results) => {
-            if (error) {
+        connectionDatabase.query(query, (error, results) => {
+            if (error || results.length === 0) {
                 callback(
                     `User with login '${login}' does not exist to get id!`,
                     undefined,
