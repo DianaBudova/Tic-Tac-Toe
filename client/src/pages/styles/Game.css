@@ -9,7 +9,7 @@
     background-color: var(--first-color);
     border-radius: 10px;
     text-align: center;
-    margin: 0 15%;
+    margin: 0 20%;
     box-shadow: 0px 0px 7px black;
     animation: pop-up 0.3s;
 }
@@ -43,7 +43,7 @@
     margin-bottom: 0;
 }
 
-.game-container-item-row {
+.game-container-item-column {
     display: inline-block;
 }
 
@@ -87,11 +87,6 @@
 
 .game-container-item-text-button {
     font-family: var(--font-family-default);
-}
-
-.game-container-item-text-points {
-    font-family: var(--font-family-default);
-    font-size: var(--font-size-extra-large);
 }
 
 .game-container-form:last-of-type Button:first-of-type {

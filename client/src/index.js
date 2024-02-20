@@ -7,6 +7,7 @@ import CreateAccount from "./pages/CreateAccount.js";
 import Menu from "./pages/Menu.js";
 import Game from "./pages/Game.js";
 import Statistic from "./pages/Statistic.js";
+import Settings from "./pages/Settings.js";
 
 const router = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
     {
         path: "/statistic",
         element: <Statistic />,
+    },
+    {
+        path: "/settings",
+        element: <Settings />,
     },
 ]);
 

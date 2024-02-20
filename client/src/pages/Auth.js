@@ -38,7 +38,7 @@ const Auth = () => {
         })
             .then((response) =>
                 response.ok
-                    ? Cookies.set("login", login) // (setMessage("You have signed successfully 😺")
+                    ? (Cookies.set("login", login), Cookies.set("sign", "cross"))
                     : setMessage("Invalid login or password 🐱")
             )
             .catch(() => setMessage("Error when validating user 😿"))
@@ -68,6 +68,7 @@ const Auth = () => {
     const handleSubmitPlayAsGuest = (e) => {
         e.preventDefault();
         Cookies.set("login", "guest");
+        Cookies.set("sign", "cross");
         navigate("/menu");
     };
 

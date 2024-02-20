@@ -35,9 +35,15 @@ const Menu = () => {
         }
     };
 
+    const handleOnClickSettings = (e) => {
+        e.preventDefault();
+        navigate("/settings");
+    };
+
     const handleOnClickLogOut = (e) => {
         e.preventDefault();
         Cookies.remove("login");
+        Cookies.remove("sign");
         navigate("/auth/sign-in");
     };
 
@@ -45,13 +51,10 @@ const Menu = () => {
         <div className="menu-container">
             {message ? <PopUp text={message} setText={setMessage} /> : <></>}
             <div className="menu-container-form">
-                <div className="menu-container-item">
-                    <p className="menu-container-item-title">
-                        Welcome, {login ? login.charAt(0).toUpperCase() + login.slice(1) : ''}!
-                    </p>
-                </div>
+                <p className="menu-container-item-title">
+                    Welcome, {login ? login.charAt(0).toUpperCase() + login.slice(1) : ''}!
+                </p>
             </div>
-
             <div className="menu-container-form">
                 <div className="menu-container-item">
                     <Button onClick={(e) => handleOnClickStart(e)}>
@@ -62,6 +65,13 @@ const Menu = () => {
                     <Button onClick={(e) => handleOnClickShowStatistic(e)}>
                         <p className="menu-container-item-text">
                             Show Statistic
+                        </p>
+                    </Button>
+                </div>
+                <div className="menu-container-item">
+                    <Button onClick={(e) => handleOnClickSettings(e)}>
+                        <p className="menu-container-item-text">
+                            Settings
                         </p>
                     </Button>
                 </div>

@@ -1,0 +1,70 @@
+.settings-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.settings-container-form {
+    background-color: var(--first-color);
+    border-radius: 10px;
+    text-align: center;
+    margin: 0 25%;
+    margin-bottom: 1%;
+    box-shadow: 0px 0px 7px black;
+    animation: pop-up 0.3s;
+}
+
+.settings-container-form:last-of-type {
+    margin-bottom: -1%;
+}
+
+.settings-container-title {
+    font-family: var(--font-family-default);
+    font-size: var(--font-size-extra-large);
+    margin: 3% 0;
+}
+
+.settings-container-text {
+    font-family: var(--font-family-default);
+    font-size: var(--font-size-default);
+}
+
+.settings-container-item {
+    margin: 2% 0;
+}
+
+.settings-container-item * {
+    display: inline-block;
+    font-size: var(--font-size-default);
+}
+
+.settings-container-item p {
+    float: left;
+    line-height: 255%;
+    margin-left: 2%;
+}
+
+.settings-container-item div {
+    float: right;
+    margin-bottom: 2%;
+}
+
+.settings-container-form Button {
+    margin: 1% 0;
+}
+
+.settings-container-item-cell {
+    background-color: var(--third-color-darker);
+    width: 10vh;
+    height: 10vh;
+    border-radius: 5px;
+    margin: 0 1%;
+    cursor: pointer;
+    transition: 150ms;
+}
+
+.settings-container-item-cell:hover {
+    background-color: var(--third-color);
+    box-shadow: 0px 0px 7px black;
+}

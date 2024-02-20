@@ -33,4 +33,19 @@ export default function (app) {
             }
         );
     });
+
+    app.post('/get-id-by-login', (request, response) => {
+        let reqBody = request.body;
+        new UserController().getIdByLogin(
+            reqBody.login,
+            (message, id, error, statusCode) => {
+                if (statusCode === 200) {
+                    response.json({"id": id, "statusCode": statusCode});
+                    console.log(logger.buildSuccessString(message, statusCode));
+                } else {
+                    console.log(logger.buildErrorString(message, error, statusCode));
+                }
+            }
+        );
+    })
 }

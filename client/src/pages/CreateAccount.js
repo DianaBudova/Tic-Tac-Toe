@@ -53,6 +53,7 @@ const CreateAccount = () => {
     const handleOnClickPlayAsGuest = (e) => {
         e.preventDefault();
         Cookies.set("login", "guest");
+        Cookies.set("sign", "cross");
         navigate("/menu");
     };
 

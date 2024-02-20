@@ -4,7 +4,7 @@
     --first-color-darker: #085926;
     --second-color: #73d587;
     --third-color: #bef4c9;
-    --third-color-darker: #a4d1ac;
+    --third-color-darker: #a3d1ac;
 
     --font-family-light: "Calibri Light";
     --font-family-default: "Calibri";
@@ -26,6 +26,34 @@
 * {
     margin: 0;
     font-family: var(--font-family-light);
+}
+
+.cross {
+    animation: draw-cross 0.3s forwards;
+    background-size: contain;
+}
+
+.circle {
+    animation: draw-circle 0.3s forwards;
+    background-size: contain;
+}
+
+@keyframes draw-cross {
+    from {
+        background-image: url("../public/images/icons/cross1.png");
+    }
+    to {
+        background-image: url("../public/images/icons/cross2.png");
+    }
+}
+
+@keyframes draw-circle {
+    from {
+        background-image: url("../public/images/icons/circle1.png");
+    }
+    to {
+        background-image: url("../public/images/icons/circle2.png");
+    }
 }
 
 @keyframes pop-up {

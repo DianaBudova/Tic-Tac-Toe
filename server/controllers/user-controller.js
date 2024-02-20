@@ -54,4 +54,25 @@ export default class UserController {
             }
         });
     }
+
+    getIdByLogin(login, callback) {
+        const query = `SELECT id FROM users WHERE login='${login}';`;
+        let number = connectionDatabase.query(query, (error, results) => {
+            if (error) {
+                callback(
+                    `User with login '${login}' does not exist to get id!`,
+                    undefined,
+                    error,
+                    500
+                );
+            } else {
+                callback(
+                    `Id by login '${login}' was got!`,
+                    results[0].id,
+                    undefined,
+                    200
+                );
+            }
+        });
+    }
 }

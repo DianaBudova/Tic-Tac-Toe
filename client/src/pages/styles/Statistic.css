@@ -1,0 +1,39 @@
+.statistic-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.statistic-container-form {
+    background-color: var(--first-color);
+    border-radius: 10px;
+    text-align: center;
+    margin: 0 25%;
+    margin-bottom: 1%;
+    box-shadow: 0px 0px 7px black;
+    animation: pop-up 0.3s;
+}
+
+.statistic-container-form:last-of-type {
+    margin-bottom: -1%;
+}
+
+.statistic-container-title {
+    font-family: var(--font-family-default);
+    font-size: var(--font-size-extra-large);
+    margin: 3% 0;
+}
+
+.statistic-container-text {
+    font-family: var(--font-family-default);
+    font-size: var(--font-size-default);
+}
+
+.statistic-container-item {
+    margin: 2% 0;
+}
+
+.statistic-container-form Button {
+    margin: 1% 0;
+}
