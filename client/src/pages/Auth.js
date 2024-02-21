@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import config from "./../config/config.json";
 import Cookies from "js-cookie";
 import "./styles/Auth.css";
 import Input from "../elements/Input";
@@ -19,14 +20,14 @@ const Auth = () => {
 
     useEffect(() => {
         if (Cookies.get("login") != undefined) {
-            navigate("/menu");
+            navigate(config.browserRoutes.menu);
         }
     });
 
     const handleSubmitSignIn = (e) => {
         e.preventDefault();
         setIsValidating(true);
-        fetch("http://localhost:4000/validate-user", {
+        fetch(config.fetchRoutes.user.validateUser, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -51,7 +52,7 @@ const Auth = () => {
 
     const handleSubmitCreateAccount = (e) => {
         e.preventDefault();
-        navigate("/auth/creating-account");
+        navigate(config.browserRoutes.createAccount);
     };
 
     const handleOnClickSwitchPassword = (e) => {
@@ -69,7 +70,7 @@ const Auth = () => {
         e.preventDefault();
         Cookies.set("login", "guest");
         Cookies.set("sign", "cross");
-        navigate("/menu");
+        navigate(config.browserRoutes.menu);
     };
 
     return (

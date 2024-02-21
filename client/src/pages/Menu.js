@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import config from "./../config/config.json";
 import Cookies from "js-cookie";
 import "./styles/Menu.css";
 import Button from "../elements/Button";
@@ -12,17 +13,17 @@ const Menu = () => {
 
     useEffect(() => {
         if (login === undefined) {
-            navigate("/auth/sign-in");
+            navigate(config.browserRoutes.auth.second);
         }
     });
 
     const handleOnClickStart = (e) => {
         e.preventDefault();
         if (login === undefined) {
-            navigate("/auth/sign-in");   
+            navigate(config.browserRoutes.auth.second);   
         }
         else {
-            navigate("/game");
+            navigate(config.browserRoutes.game);
         }
     };
 
@@ -31,20 +32,20 @@ const Menu = () => {
         if (login === "guest") {
             setMessage("Guests can't see statistic 🐱");
         } else {
-            navigate("/statistic");
+            navigate(config.browserRoutes.statistic);
         }
     };
 
     const handleOnClickSettings = (e) => {
         e.preventDefault();
-        navigate("/settings");
+        navigate(config.browserRoutes.settings);
     };
 
     const handleOnClickLogOut = (e) => {
         e.preventDefault();
         Cookies.remove("login");
         Cookies.remove("sign");
-        navigate("/auth/sign-in");
+        navigate(config.browserRoutes.auth.second);
     };
 
     return (

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import config from "./../config/config.json";
 import Cookies from "js-cookie";
 import "./styles/Statistic.css";
 import Button from "../elements/Button";
@@ -15,10 +16,10 @@ const Statistic = () => {
 
     useEffect(() => {
         if (login === undefined) {
-            navigate("/auth/sign-in");
+            navigate(config.browserRoutes.auth.second);
             return;
         }
-        fetch("http://localhost:4000/get-id-by-login", {
+        fetch(config.fetchRoutes.user.getIdByLogin, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -28,7 +29,7 @@ const Statistic = () => {
             }),
         }).then((response) => {
             response.json().then((data) => {
-                fetch("http://localhost:4000/get-statistic-by-id", {
+                fetch(config.fetchRoutes.statistic.getStatisticById, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -54,9 +55,9 @@ const Statistic = () => {
     const handleOnClickBackToMenu = (e) => {
         e.preventDefault();
         if (login === undefined) {
-            navigate("/auth/sign-in");
+            navigate(config.browserRoutes.auth.second);
         } else {
-            navigate("/menu");
+            navigate(config.browserRoutes.menu);
         }
     };
 

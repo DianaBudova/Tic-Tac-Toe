@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import config from "./../config/config.json";
 import Cookies from "js-cookie";
 import "./styles/Game.css";
 import Button from "../elements/Button";
@@ -17,16 +18,16 @@ const Game = () => {
     const [userGames, setUserGames] = useState(0);
     const [opponentPoints, setOpponentPoints] = useState(0);
     const [message, setMessage] = useState("");
-    const [isOpponentFirst, setIsOpponentFirst] = useState(
-        Math.floor(Math.random() * (9 - 1) + 1) == 1 ? true : false
-    );
     const navigate = useNavigate();
 
     useEffect(() => {
         if (login === undefined) {
-            navigate("/auth/sign-in");
+            navigate(config.browserRoutes.auth.second);
         }
-        fetch("http://localhost:4000/get-id-by-login", {
+        if (login === "guest") {
+            return;
+        }
+        fetch(config.fetchRoutes.user.getIdByLogin, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -52,49 +53,38 @@ const Game = () => {
         }
         element.classList.add(userSign);
         let availableCells = getAvailableCells();
+        if (availableCells < 5) {
+            if (userWins()) {
+                setMessage("User win 😸");
+                whenUserWins();
+                return;
+            } else if (opponentWins()) {
+                setMessage("Opponent win 😿");
+                whenOpponentWins();
+                return;
+            } else if (availableCells == 0) {
+                setMessage("No one win 🐱");
+                return;
+            }
+        }
         if (availableCells > 1) {
+            let elements = [
+                ...document.getElementsByClassName("game-container-item-cell"),
+                ...document.getElementsByTagName("Button"),
+            ];
+            elements.forEach((element) => element.classList.add("unclickable"));
             setTimeout(function () {
                 setRandomOpponentSign();
-            }, Math.floor(Math.random() * (3000 - 500) + 1));
-        }
-        if (availableCells < 5) {
-            if (isUserWin()) {
-                setMessage("You win 😸");
-                setUserPoints(userPoints + 1);
-                setIsOpponentFirst(false);
-                setUserGames(userGames + 1);
-                updateUserWinsInDatabase();
-                updateUserGamesInDatabase();
-            } else if (isOpponentWin()) {
-                setMessage("Opponent win 😿");
-                setOpponentPoints(opponentPoints + 1);
-                setIsOpponentFirst(true);
-                setUserFailures(userFailures + 1);
-                setUserGames(userGames + 1);
-                updateUserFailuresInDatabase();
-                updateUserGamesInDatabase();
-            }
-        }
-        if (availableCells == 0) {
-            if (isUserWin()) {
-                setMessage("You win 😸");
-                setUserPoints(userPoints + 1);
-                setIsOpponentFirst(false);
-                updateUserWinsInDatabase();
-            } else if (isOpponentWin()) {
-                setMessage("Opponent win 😿");
-                setOpponentPoints(opponentPoints + 1);
-                setIsOpponentFirst(true);
-                setUserFailures(userFailures + 1);
-                updateUserFailuresInDatabase();
-            } else {
-                setMessage("No one win 🐱");
-                setIsOpponentFirst(
-                    Math.floor(Math.random() * (9 - 1) + 1) == 1 ? true : false
+                elements.forEach((element) =>
+                    element.classList.remove("unclickable")
                 );
-            }
-            setUserGames(userGames + 1);
-            updateUserGamesInDatabase();
+                if (opponentWins()) {
+                    setTimeout(function () {
+                        setMessage("Opponent win 😿");
+                    }, 70);
+                    whenOpponentWins();
+                }
+            }, Math.floor(Math.random() * (3000 - 500) + 1));
         }
     };
 
@@ -107,19 +97,19 @@ const Game = () => {
 
     const handleOnClickBackToMenu = (e) => {
         e.preventDefault();
-        navigate("/menu");
+        navigate(config.browserRoutes.menu);
     };
 
     const handleOnClickLogOut = (e) => {
         e.preventDefault();
         Cookies.remove("login");
         Cookies.remove("sign");
-        navigate("/auth/sign-in");
+        navigate(config.browserRoutes.auth.second);
     };
 
     const updateUserWinsInDatabase = () => {
         let oldWins;
-        fetch("http://localhost:4000/get-statistic-by-id", {
+        fetch(config.fetchRoutes.statistic.getStatisticById, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -134,7 +124,7 @@ const Game = () => {
             }
             response.json().then((data) => {
                 oldWins = data.data.wins;
-                fetch("http://localhost:4000/update-wins", {
+                fetch(config.fetchRoutes.statistic.updateWins, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
@@ -150,7 +140,7 @@ const Game = () => {
 
     const updateUserFailuresInDatabase = () => {
         let oldFailures;
-        fetch("http://localhost:4000/get-statistic-by-id", {
+        fetch(config.fetchRoutes.statistic.getStatisticById, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -165,7 +155,7 @@ const Game = () => {
             }
             response.json().then((data) => {
                 oldFailures = data.data.failures;
-                fetch("http://localhost:4000/update-failures", {
+                fetch(config.fetchRoutes.statistic.updateFailures, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
@@ -181,7 +171,7 @@ const Game = () => {
 
     const updateUserGamesInDatabase = () => {
         let oldGames;
-        fetch("http://localhost:4000/get-statistic-by-id", {
+        fetch(config.fetchRoutes.statistic.getStatisticById, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -196,7 +186,7 @@ const Game = () => {
             }
             response.json().then((data) => {
                 oldGames = data.data.games;
-                fetch("http://localhost:4000/update-games", {
+                fetch(config.fetchRoutes.statistic.updateGames, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
@@ -228,7 +218,7 @@ const Game = () => {
 
     const setRandomOpponentSign = () => {
         while (true) {
-            let randomNumber = Math.floor(Math.random() * (9 - 1) + 1);
+            let randomNumber = Math.floor(Math.random() * (10 - 1) + 1);
             let element = document.getElementById(`cell-${randomNumber}`);
             if (
                 element.classList.contains("cross") ||
@@ -246,10 +236,11 @@ const Game = () => {
             let element = document.getElementById(`cell-${i}`);
             element.classList.remove("cross");
             element.classList.remove("circle");
+            element.classList.remove("unclickable");
         }
     };
 
-    const isUserWin = () => {
+    const userWins = () => {
         if (
             document.getElementById("cell-1").classList.contains(userSign) &&
             document.getElementById("cell-5").classList.contains(userSign) &&
@@ -303,7 +294,7 @@ const Game = () => {
         }
     };
 
-    const isOpponentWin = () => {
+    const opponentWins = () => {
         if (
             document
                 .getElementById("cell-1")
@@ -387,6 +378,23 @@ const Game = () => {
         } else {
             return false;
         }
+    };
+
+    const whenUserWins = () => {
+        setUserPoints(userPoints + 1);
+        setUserGames(userGames + 1);
+        updateUserWinsInDatabase();
+        updateUserGamesInDatabase();
+        clearField();
+    };
+
+    const whenOpponentWins = () => {
+        setOpponentPoints(opponentPoints + 1);
+        setUserFailures(userFailures + 1);
+        setUserGames(userGames + 1);
+        updateUserFailuresInDatabase();
+        updateUserGamesInDatabase();
+        clearField();
     };
 
     return (

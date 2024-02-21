@@ -1,5 +1,8 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import config from "./../config/config.json";
+import passwordValidator from "./../common/passwordValidator";
+import loginValidator from "./../common/loginValidator";
 import Cookies from "js-cookie";
 import "./styles/CreateAccount.css";
 import Input from "../elements/Input";
@@ -19,8 +22,18 @@ const CreateAccount = () => {
 
     const handleSubmitCreateAccount = (e) => {
         e.preventDefault();
+        let loginValidated = new loginValidator().validate(login);
+        if (!loginValidated.isValid) {
+            setMessage(loginValidated.message);
+            return;
+        }
+        let passwordValidated = new passwordValidator().validate(password);
+        if (!passwordValidated.isValid) {
+            setMessage(passwordValidated.message);
+            return;
+        }
         setIsCreating(true);
-        fetch("http://localhost:4000/create-user", {
+        fetch(config.fetchRoutes.user.createUser, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -31,7 +44,7 @@ const CreateAccount = () => {
             }),
         });
         let loginId;
-        fetch("http://localhost:4000/get-id-by-login", {
+        fetch(config.fetchRoutes.user.getIdByLogin, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -46,7 +59,7 @@ const CreateAccount = () => {
                     loginId = data.id;
                 })
                 .finally(() => {
-                    fetch("http://localhost:4000/create-statistic", {
+                    fetch(config.fetchRoutes.statistic.createStatistic, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -58,7 +71,7 @@ const CreateAccount = () => {
                         .then((response) =>
                             response.ok
                                 ? setMessage(
-                                      "Congratulations! You have created an account 😺"
+                                      "You have created an account 😺"
                                   )
                                 : setMessage(
                                       "Sorry! Such the login is already taken 🐱"
@@ -78,14 +91,14 @@ const CreateAccount = () => {
 
     const handleOnClickBackToSignIn = (e) => {
         e.preventDefault();
-        navigate("/auth/sign-in");
+        navigate(config.browserRoutes.auth.second);
     };
 
     const handleOnClickPlayAsGuest = (e) => {
         e.preventDefault();
         Cookies.set("login", "guest");
         Cookies.set("sign", "cross");
-        navigate("/menu");
+        navigate(config.browserRoutes.menu);
     };
 
     const handleOnClickSwitchPassword = (e) => {

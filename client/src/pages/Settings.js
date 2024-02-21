@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import config from "./../config/config.json";
 import Cookies from "js-cookie";
 import "./styles/Settings.css";
 import Button from "../elements/Button";
@@ -10,7 +11,7 @@ const Settings = () => {
 
     useEffect(() => {
         if (login === undefined) {
-            navigate("/auth/sign-in");
+            navigate(config.browserRoutes.auth.second);
         }
     });
 
@@ -34,9 +35,9 @@ const Settings = () => {
     const handleOnClickBackToMenu = (e) => {
         e.preventDefault();
         if (login === undefined) {
-            navigate("/auth/sign-in");
+            navigate(config.browserRoutes.auth.second);
         } else {
-            navigate("/menu");
+            navigate(config.browserRoutes.menu);
         }
     };
 

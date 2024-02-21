@@ -15,7 +15,7 @@
 
     background-image: url("../public/images/background-image-blured.png");
     background-size: stretch;
-    animation: slide 10s linear infinite;
+    animation: slide 30s linear infinite;
 }
 
 ::selection {
@@ -26,6 +26,11 @@
 * {
     margin: 0;
     font-family: var(--font-family-light);
+}
+
+.unclickable {
+    pointer-events: none;
+    opacity: 0.75;
 }
 
 .cross {
