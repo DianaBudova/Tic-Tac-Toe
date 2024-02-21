@@ -40,4 +40,61 @@ export default class StatisticController {
             }
         });
     }
+
+    updateWins(login_id, wins, callback) {
+        const query = `UPDATE statistic SET wins = '${wins}' WHERE login_id = '${login_id}';`;
+        connectionDatabase.query(query, (error) => {
+            if (error) {
+                callback(
+                    `Winning statistic of user with login id '${login_id}' update failed!`,
+                    error,
+                    500
+                );
+            } else {
+                callback(
+                    `Winning statistic of user with login id '${login_id}' update successful!`,
+                    undefined,
+                    200
+                );
+            }
+        });
+    }
+
+    updateFailures(login_id, failures, callback) {
+        const query = `UPDATE statistic SET failures = '${failures}' WHERE login_id = '${login_id}';`;
+        connectionDatabase.query(query, (error) => {
+            if (error) {
+                callback(
+                    `Failing statistic of user with login id '${login_id}' update failed!`,
+                    error,
+                    500
+                );
+            } else {
+                callback(
+                    `Failing statistic of user with login id '${login_id}' update successful!`,
+                    undefined,
+                    200
+                );
+            }
+        });
+    }
+
+    updateGames(login_id, games, callback) {
+        const query = `UPDATE statistic SET games = '${games}' WHERE login_id = '${login_id}';`;
+        connectionDatabase.query(query, (error) => {
+            if (error) {
+                callback(
+                    `Games amount statistic of user with login id '${login_id}' update failed!`,
+                    error,
+                    500
+                );
+            } else {
+                callback(
+                    `Games amount statistic of user with login id '${login_id}' update successful!`,
+                    undefined,
+                    200
+                );
+            }
+        });
+    }
 }

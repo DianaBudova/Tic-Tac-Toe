@@ -7,20 +7,38 @@ import PopUp from "../elements/PopUp";
 
 const Game = () => {
     const [login, setLogin] = useState(Cookies.get("login"));
+    const [loginId, setLoginId] = useState();
     const [userSign, setUserSign] = useState(Cookies.get("sign"));
     const [opponentSign, setOpponentSign] = useState(
         userSign === "cross" ? "circle" : "cross"
     );
     const [userPoints, setUserPoints] = useState(0);
+    const [userFailures, setUserFailures] = useState(0);
+    const [userGames, setUserGames] = useState(0);
     const [opponentPoints, setOpponentPoints] = useState(0);
     const [message, setMessage] = useState("");
-    const [isOpponentFirst, setIsOpponentFirst] = useState((Math.floor(Math.random() * (9 - 1) + 1)) == 1 ? true : false);
+    const [isOpponentFirst, setIsOpponentFirst] = useState(
+        Math.floor(Math.random() * (9 - 1) + 1) == 1 ? true : false
+    );
     const navigate = useNavigate();
 
     useEffect(() => {
         if (login === undefined) {
             navigate("/auth/sign-in");
         }
+        fetch("http://localhost:4000/get-id-by-login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                login: login,
+            }),
+        }).then((response) => {
+            response.json().then((data) => {
+                setLoginId(data.id);
+            });
+        });
     });
 
     const handleOnClickCell = (e, id) => {
@@ -35,17 +53,26 @@ const Game = () => {
         element.classList.add(userSign);
         let availableCells = getAvailableCells();
         if (availableCells > 1) {
-            setRandomOpponentSign();
+            setTimeout(function () {
+                setRandomOpponentSign();
+            }, Math.floor(Math.random() * (3000 - 500) + 1));
         }
         if (availableCells < 5) {
             if (isUserWin()) {
                 setMessage("You win 😸");
                 setUserPoints(userPoints + 1);
                 setIsOpponentFirst(false);
+                setUserGames(userGames + 1);
+                updateUserWinsInDatabase();
+                updateUserGamesInDatabase();
             } else if (isOpponentWin()) {
                 setMessage("Opponent win 😿");
                 setOpponentPoints(opponentPoints + 1);
                 setIsOpponentFirst(true);
+                setUserFailures(userFailures + 1);
+                setUserGames(userGames + 1);
+                updateUserFailuresInDatabase();
+                updateUserGamesInDatabase();
             }
         }
         if (availableCells == 0) {
@@ -53,14 +80,21 @@ const Game = () => {
                 setMessage("You win 😸");
                 setUserPoints(userPoints + 1);
                 setIsOpponentFirst(false);
+                updateUserWinsInDatabase();
             } else if (isOpponentWin()) {
                 setMessage("Opponent win 😿");
                 setOpponentPoints(opponentPoints + 1);
                 setIsOpponentFirst(true);
+                setUserFailures(userFailures + 1);
+                updateUserFailuresInDatabase();
             } else {
                 setMessage("No one win 🐱");
-                setIsOpponentFirst((Math.floor(Math.random() * (9 - 1) + 1)) == 1 ? true : false);
+                setIsOpponentFirst(
+                    Math.floor(Math.random() * (9 - 1) + 1) == 1 ? true : false
+                );
             }
+            setUserGames(userGames + 1);
+            updateUserGamesInDatabase();
         }
     };
 
@@ -81,6 +115,99 @@ const Game = () => {
         Cookies.remove("login");
         Cookies.remove("sign");
         navigate("/auth/sign-in");
+    };
+
+    const updateUserWinsInDatabase = () => {
+        let oldWins;
+        fetch("http://localhost:4000/get-statistic-by-id", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                login_id: loginId,
+            }),
+        }).then((response) => {
+            if (response.status !== 200) {
+                setMessage("Error when updating statistic 😿");
+                return;
+            }
+            response.json().then((data) => {
+                oldWins = data.data.wins;
+                fetch("http://localhost:4000/update-wins", {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        login_id: loginId,
+                        wins: oldWins + 1,
+                    }),
+                });
+            });
+        });
+    };
+
+    const updateUserFailuresInDatabase = () => {
+        let oldFailures;
+        fetch("http://localhost:4000/get-statistic-by-id", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                login_id: loginId,
+            }),
+        }).then((response) => {
+            if (response.status !== 200) {
+                setMessage("Error when updating statistic 😿");
+                return;
+            }
+            response.json().then((data) => {
+                oldFailures = data.data.failures;
+                fetch("http://localhost:4000/update-failures", {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        login_id: loginId,
+                        failures: oldFailures + 1,
+                    }),
+                });
+            });
+        });
+    };
+
+    const updateUserGamesInDatabase = () => {
+        let oldGames;
+        fetch("http://localhost:4000/get-statistic-by-id", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                login_id: loginId,
+            }),
+        }).then((response) => {
+            if (response.status !== 200) {
+                setMessage("Error when updating statistic 😿");
+                return;
+            }
+            response.json().then((data) => {
+                oldGames = data.data.games;
+                fetch("http://localhost:4000/update-games", {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        login_id: loginId,
+                        games: oldGames + 1,
+                    }),
+                });
+            });
+        });
     };
 
     const getAvailableCells = () => {
@@ -120,7 +247,7 @@ const Game = () => {
             element.classList.remove("cross");
             element.classList.remove("circle");
         }
-    }
+    };
 
     const isUserWin = () => {
         if (
@@ -178,50 +305,82 @@ const Game = () => {
 
     const isOpponentWin = () => {
         if (
-            document.getElementById("cell-1").classList.contains(opponentSign) &&
-            document.getElementById("cell-5").classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-1")
+                .classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-5")
+                .classList.contains(opponentSign) &&
             document.getElementById("cell-9").classList.contains(opponentSign)
         ) {
             return true;
         } else if (
-            document.getElementById("cell-3").classList.contains(opponentSign) &&
-            document.getElementById("cell-5").classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-3")
+                .classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-5")
+                .classList.contains(opponentSign) &&
             document.getElementById("cell-7").classList.contains(opponentSign)
         ) {
             return true;
         } else if (
-            document.getElementById("cell-1").classList.contains(opponentSign) &&
-            document.getElementById("cell-4").classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-1")
+                .classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-4")
+                .classList.contains(opponentSign) &&
             document.getElementById("cell-7").classList.contains(opponentSign)
         ) {
             return true;
         } else if (
-            document.getElementById("cell-2").classList.contains(opponentSign) &&
-            document.getElementById("cell-5").classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-2")
+                .classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-5")
+                .classList.contains(opponentSign) &&
             document.getElementById("cell-8").classList.contains(opponentSign)
         ) {
             return true;
         } else if (
-            document.getElementById("cell-3").classList.contains(opponentSign) &&
-            document.getElementById("cell-6").classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-3")
+                .classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-6")
+                .classList.contains(opponentSign) &&
             document.getElementById("cell-9").classList.contains(opponentSign)
         ) {
             return true;
         } else if (
-            document.getElementById("cell-1").classList.contains(opponentSign) &&
-            document.getElementById("cell-2").classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-1")
+                .classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-2")
+                .classList.contains(opponentSign) &&
             document.getElementById("cell-3").classList.contains(opponentSign)
         ) {
             return true;
         } else if (
-            document.getElementById("cell-4").classList.contains(opponentSign) &&
-            document.getElementById("cell-5").classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-4")
+                .classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-5")
+                .classList.contains(opponentSign) &&
             document.getElementById("cell-6").classList.contains(opponentSign)
         ) {
             return true;
         } else if (
-            document.getElementById("cell-7").classList.contains(opponentSign) &&
-            document.getElementById("cell-8").classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-7")
+                .classList.contains(opponentSign) &&
+            document
+                .getElementById("cell-8")
+                .classList.contains(opponentSign) &&
             document.getElementById("cell-9").classList.contains(opponentSign)
         ) {
             return true;
@@ -232,7 +391,14 @@ const Game = () => {
 
     return (
         <div className="game-container">
-            {message ? <><PopUp text={message} setText={setMessage}/> <>{clearField()}</></> : <></>}
+            {message ? (
+                <>
+                    <PopUp text={message} setText={setMessage} />{" "}
+                    <>{clearField()}</>
+                </>
+            ) : (
+                <></>
+            )}
             <div className="game-container-form">
                 <div className="game-container-item">
                     <p className="game-container-item-title">Tic-Tac-Toe</p>

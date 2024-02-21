@@ -32,4 +32,49 @@ export default function (app) {
             }
         );
     });
+
+    app.patch('/update-wins', (request, response) => {
+        new StatisticController().updateWins(
+            request.body.login_id,
+            request.body.wins,
+            (message, error, statusCode) => {
+                if (statusCode === 200) {
+                    console.log(logger.buildSuccessString(message, statusCode));
+                } else {
+                    console.log(logger.buildErrorString(message, error, statusCode));
+                }
+                response.sendStatus(statusCode);
+            }
+        )
+    });
+
+    app.patch('/update-failures', (request, response) => {
+        new StatisticController().updateFailures(
+            request.body.login_id,
+            request.body.failures,
+            (message, error, statusCode) => {
+                if (statusCode === 200) {
+                    console.log(logger.buildSuccessString(message, statusCode));
+                } else {
+                    console.log(logger.buildErrorString(message, error, statusCode));
+                }
+                response.sendStatus(statusCode);
+            }
+        )
+    });
+
+    app.patch('/update-games', (request, response) => {
+        new StatisticController().updateGames(
+            request.body.login_id,
+            request.body.games,
+            (message, error, statusCode) => {
+                if (statusCode === 200) {
+                    console.log(logger.buildSuccessString(message, statusCode));
+                } else {
+                    console.log(logger.buildErrorString(message, error, statusCode));
+                }
+                response.sendStatus(statusCode);
+            }
+        )
+    });
 }
