@@ -383,8 +383,10 @@ const Game = () => {
     const whenUserWins = () => {
         setUserPoints(userPoints + 1);
         setUserGames(userGames + 1);
-        updateUserWinsInDatabase();
-        updateUserGamesInDatabase();
+        if (login !== "guest") {
+            updateUserWinsInDatabase();
+            updateUserGamesInDatabase();
+        }
         clearField();
     };
 
@@ -392,8 +394,10 @@ const Game = () => {
         setOpponentPoints(opponentPoints + 1);
         setUserFailures(userFailures + 1);
         setUserGames(userGames + 1);
-        updateUserFailuresInDatabase();
-        updateUserGamesInDatabase();
+        if (login !== "guest") {
+            updateUserFailuresInDatabase();
+            updateUserGamesInDatabase();
+        }
         clearField();
     };
 

@@ -10,5 +10,6 @@
 
 .button:hover {
     background-color: var(--third-color);
+    padding: 1% 2.25%;
     box-shadow: 0px 0px 7px black;
 }
